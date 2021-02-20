@@ -26,6 +26,7 @@ class Post(db.Model):
     title = db.Column(db.String(255), nullable=False)
     content = db.Column(db.Text, nullable=False)
     publication_datetime = db.Column(db.DateTime, default=datetime.datetime.now())
+    comments = db.relationship('Comment', backref='post', lazy='dynamic')
 
     def __repr__(self):
         return 'Post: ' + self.title
