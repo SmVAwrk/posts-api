@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Файл для управления миграциями БД."""
 
 from app import manager
 from main import *
