@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, ValidationError
 
-from models import User
+from .models import User
 
 
 def unique_email(data):

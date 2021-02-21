@@ -1,15 +1,15 @@
 from flask import Blueprint, jsonify, request, g, url_for
 from flask_restful import Api, Resource
 
-from api.mixins import DataHandlerMixin
-from app import db, pagination
-from models import Post, User, Comment
-from serializers import (
+from .mixins import DataHandlerMixin
+from flask_app import db, pagination
+from flask_app.models import Post, User, Comment
+from flask_app.serializers import (
     posts_list_schema, user_reg_schema,
     post_create_schema, post_patch_schema,
     comment_create_schema, comment_patch_schema
 )
-from views import auth
+from flask_app.views import auth
 
 api_bp = Blueprint(name='api', import_name=__name__)
 api = Api(api_bp)
@@ -60,7 +60,7 @@ class PostsListView(DataHandlerMixin, Resource):
         posts = Post.query.order_by(Post.publication_datetime.desc()).all()
         if not posts:
             return {'message': 'There is no posts'}
-        return pagination.paginate(Post, posts_list_schema, True)
+        return pagination.paginate(posts, posts_list_schema, True)
 
     @auth.login_required
     def post(self):
@@ -189,7 +189,7 @@ class CommentEditView(DataHandlerMixin, Resource):
         if not_found:
             return not_found[0], not_found[1]
         comment = post.comments.filter(Comment.id == id).first()
-        not_found_or_not_owner = self._check_data(user=g.user, permission_obj='comment', comment=comment)
+        not_found_or_not_owner = self._check_data(user=g.user, permission_key='comment', comment=comment)
         if not_found_or_not_owner:
             return not_found_or_not_owner[0], not_found_or_not_owner[1]
 
@@ -215,7 +215,7 @@ class CommentEditView(DataHandlerMixin, Resource):
         if not_found:
             return not_found[0], not_found[1]
         comment = post.comments.filter(Comment.id == id).first()
-        not_found_or_not_owner = self._check_data(user=g.user, permission_obj='comment', comment=comment)
+        not_found_or_not_owner = self._check_data(user=g.user, permission_key='comment', comment=comment)
         if not_found_or_not_owner:
             return not_found_or_not_owner[0], not_found_or_not_owner[1]
 
@@ -241,13 +241,13 @@ class CommentEditView(DataHandlerMixin, Resource):
         if not_found:
             return not_found[0], not_found[1]
         comment = post.comments.filter(Comment.id == id).first()
-        not_found_or_not_owner = self._check_data(user=g.user, permission_obj='comment', comment=comment)
+        not_found_or_not_owner = self._check_data(user=g.user, permission_key='comment', comment=comment)
         if not_found_or_not_owner:
             return not_found_or_not_owner[0], not_found_or_not_owner[1]
 
         db.session.delete(comment)
         db.session.commit()
-        return {'message': 'Comment deleted'}, 204
+        return {'message': 'comment deleted'}, 204
 
 
 api.add_resource(UserRegistration, '/registration', endpoint='registration')

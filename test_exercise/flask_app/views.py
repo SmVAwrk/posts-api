@@ -2,8 +2,8 @@ from flask import jsonify, g, url_for
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.utils import redirect
 
-from app import app
-from models import User
+from . import app
+from .models import User
 
 auth = HTTPBasicAuth()
 
@@ -12,6 +12,12 @@ auth = HTTPBasicAuth()
 def index():
     """Представление индексной страницы"""
     return redirect(url_for('api.api_root'))
+
+
+@app.errorhandler(404)
+def error_handler():
+    pass
+    # TODO
 
 
 @auth.verify_password

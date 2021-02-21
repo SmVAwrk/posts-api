@@ -1,6 +1,6 @@
 import datetime
 
-from app import db
+from . import db
 from passlib.apps import custom_app_context as password_hasher
 
 
@@ -16,7 +16,7 @@ class User(db.Model):
 
     def hash_password(self, password):
         """Метод хеширования пароля"""
-        self.password = password_hasher.encrypt(password)
+        self.password = password_hasher.hash(password)
 
     def verify_password(self, password):
         """Метод проверки пароля"""
