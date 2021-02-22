@@ -4,7 +4,7 @@ from unittest import TestCase
 
 from flask_app import db, app
 from flask_app.models import User, Post, Comment
-from flask_app.serializers import posts_list_schema
+from flask_app.serializers import posts_list_schema, post_create_schema
 
 
 class BaseTestCase(TestCase):
@@ -107,6 +107,18 @@ class PostsTestCase(BaseTestCase):
         serializer_data = posts_list_schema.dump(posts)
         response_data = response.get_json()
         self.assertEqual(serializer_data, response_data['data'])
+
+    def test_get_post(self):
+        post1 = Post(author_id=self.user.id, title='Title 1', content='Content 1')
+        db.session.add(post1)
+        db.session.commit()
+
+        response = self.client.get(f'/api/v1/posts/{post1.id}')
+        self.assertEqual(200, response.status_code)
+
+        serializer_data = post_create_schema.dump(post1)
+        response_data = response.get_json()
+        self.assertEqual(serializer_data, response_data)
 
     def test_update_post_not_owner(self):
         post1 = Post(author_id=self.post_owner.id, title='Title 1', content='Content 1')

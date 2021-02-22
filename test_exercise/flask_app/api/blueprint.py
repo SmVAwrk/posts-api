@@ -47,7 +47,7 @@ class UserRegistration(DataHandlerMixin, Resource):
         user.hash_password(data['password'])
         db.session.add(user)
         db.session.commit()
-        return {'user': user_reg_schema.dump(user)}, 201
+        return user_reg_schema.dump(user), 201
 
 
 class PostsListView(DataHandlerMixin, Resource):
@@ -84,7 +84,15 @@ class PostsListView(DataHandlerMixin, Resource):
 
 
 class PostEditView(DataHandlerMixin, Resource):
-    """Представление для редактирования и удаления постов."""
+    """Представление для просмотра, редактирования и удаления поста."""
+
+    def get(self, id):
+        """Метод обработки GET-запроса, реализует просмотр экземпляра поста"""
+        post = Post.query.filter(Post.id == id).first()
+        not_found = self._check_data(post=post)
+        if not_found:
+            return not_found[0], not_found[1]
+        return post_create_schema.dump(post), 200
 
     @auth.login_required
     def put(self, id):
@@ -189,7 +197,7 @@ class CommentEditView(DataHandlerMixin, Resource):
         if not_found:
             return not_found[0], not_found[1]
         comment = post.comments.filter(Comment.id == id).first()
-        not_found_or_not_owner = self._check_data(user=g.user, permission_key='comment', comment=comment)
+        not_found_or_not_owner = self._check_data(user_=g.user, permission_key='comment', comment=comment)
         if not_found_or_not_owner:
             return not_found_or_not_owner[0], not_found_or_not_owner[1]
 
@@ -215,7 +223,7 @@ class CommentEditView(DataHandlerMixin, Resource):
         if not_found:
             return not_found[0], not_found[1]
         comment = post.comments.filter(Comment.id == id).first()
-        not_found_or_not_owner = self._check_data(user=g.user, permission_key='comment', comment=comment)
+        not_found_or_not_owner = self._check_data(user_=g.user, permission_key='comment', comment=comment)
         if not_found_or_not_owner:
             return not_found_or_not_owner[0], not_found_or_not_owner[1]
 
@@ -241,7 +249,7 @@ class CommentEditView(DataHandlerMixin, Resource):
         if not_found:
             return not_found[0], not_found[1]
         comment = post.comments.filter(Comment.id == id).first()
-        not_found_or_not_owner = self._check_data(user=g.user, permission_key='comment', comment=comment)
+        not_found_or_not_owner = self._check_data(user_=g.user, permission_key='comment', comment=comment)
         if not_found_or_not_owner:
             return not_found_or_not_owner[0], not_found_or_not_owner[1]
 

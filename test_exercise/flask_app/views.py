@@ -15,9 +15,8 @@ def index():
 
 
 @app.errorhandler(404)
-def error_handler():
-    pass
-    # TODO
+def error_handler(e):
+    return jsonify({'message': 'page not found'}), 404
 
 
 @auth.verify_password
@@ -32,5 +31,5 @@ def verify_password(username, password):
 
 @auth.error_handler
 def auth_error(status):
-    """Кастомная обработка ошибок валидации"""
+    """Кастомная обработка auth ошибок"""
     return jsonify({'message': 'access denied'}), status

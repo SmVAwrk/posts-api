@@ -23,13 +23,13 @@ class DataHandlerMixin:
             return err.messages, 400
 
     @staticmethod
-    def _check_data(permission_key=None, user=None, **kwargs):
+    def _check_data(permission_key=None, user_=None, **kwargs):
         """
         Метод для проверки наличия объекта(объектов) и прав доступа
         :param permission_key: ключ для идентификации объекта,
         к которому нужно проверить права доступа,
         если не указан, значит проверка пропускается
-        :param user: пользователь, запрашивающий доступ,
+        :param user_: пользователь, запрашивающий доступ,
         если проверка прав доступа не требуется, то не указывается
         :param kwargs: проверяемые объекты (ключ=объект)
         :return: В случае успешной проверки возвращает None,
@@ -40,6 +40,6 @@ class DataHandlerMixin:
             if not query_obj:
                 return {'message': f'{key} not found'}, 404
         if permission_key:
-            assert user.id
-            if not kwargs[permission_key].author_id == user.id:
+            assert user_
+            if not kwargs[permission_key].author_id == user_.id:
                 return {'message': f'you cannot edit this {permission_key}'}, 403
