@@ -4,11 +4,11 @@ from flask_rest_paginate import Pagination
 from flask_script import Manager
 from flask_sqlalchemy import SQLAlchemy
 
-from .config import Configuration
+from .config import Configuration, ProductionConfiguration
 
 # Приложение
 app = Flask(__name__)
-app.config.from_object(Configuration)
+app.config.from_object(ProductionConfiguration)
 
 # База данных
 db = SQLAlchemy(app)
