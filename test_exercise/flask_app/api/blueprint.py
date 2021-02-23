@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Blueprint, jsonify, request, g, url_for
 from flask_restful import Api, Resource
 
@@ -76,7 +78,8 @@ class PostsListView(DataHandlerMixin, Resource):
         post = Post(
             author_id=g.user.id,
             title=data['title'],
-            content=data['content']
+            content=data['content'],
+            publication_datetime=datetime.datetime.now()
         )
         db.session.add(post)
         db.session.commit()
@@ -150,7 +153,7 @@ class PostEditView(DataHandlerMixin, Resource):
             return not_found_or_not_owner[0], not_found_or_not_owner[1]
         db.session.delete(post)
         db.session.commit()
-        return {'message': 'Post deleted'}, 204
+        return '', 204
 
 
 class CommentsCreateView(DataHandlerMixin, Resource):
@@ -176,7 +179,8 @@ class CommentsCreateView(DataHandlerMixin, Resource):
             post_id=post_id,
             author_id=g.user.id,
             title=data['title'],
-            content=data['content']
+            content=data['content'],
+            publication_datetime=datetime.datetime.now()
         )
         db.session.add(comment)
         db.session.commit()
@@ -255,7 +259,7 @@ class CommentEditView(DataHandlerMixin, Resource):
 
         db.session.delete(comment)
         db.session.commit()
-        return {'message': 'comment deleted'}, 204
+        return '', 204
 
 
 api.add_resource(UserRegistration, '/registration', endpoint='registration')
