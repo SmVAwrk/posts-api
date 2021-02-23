@@ -1,6 +1,6 @@
 # Тестовое задание
 
-### API приложения
+### API приложения (доступно по ссылке: https://liis-test-job.herokuapp.com/)
 
 #### Данный интерфейс предоставляет следующие возможности:
 
@@ -20,15 +20,24 @@
         password: string 
     }
 
-Регистрация пользователя.
+###### Регистрация пользователя.
 
-_Метод_ ___POST___ - `api/v1/registration`
+_Метод_ ___POST___ - `/api/v1/registration`
 
+Входные данные:
     
     {
         "email": "string",
         "username": "string",
         "password": "string"
+    }
+
+Выходные данные:
+    
+    {
+        "id": "int",
+        "username": "string",
+        "email": "string"
     }
 
 ### Post:
@@ -40,37 +49,52 @@ _Метод_ ___POST___ - `api/v1/registration`
         title: string
         content: string
         publication_datetime: datatime
-        comments: [objectid, ]
     }
 
-Просмотр списка постов.
+###### Просмотр списка постов.
 
-_Метод_ ___GET___ - `api/v1/posts`
+_Метод_ ___GET___ - `/api/v1/posts`
 
+Выходные данные:
 
-    [{ 
-        "id": "int",
-        "author_id": "objectid",
-        "title": "string",
-        "content": "string",
-        "publication_datetime": "datatime",
-        "comments": []
-    }]
+    [
+        { 
+            "id": "int",
+            "author_id": "objectid",
+            "title": "string",
+            "content": "string",
+            "publication_datetime": "datatime",
+            "comments": []
+        },
+    ]
 
-Создание поста.
+###### Создание поста.
 
-_Метод_ ___POST___ - `api/v1/posts`
+_Метод_ ___POST___ - `/api/v1/posts`
 
+Входные данные:
 
     {
         "title": "string",
         "content": "string"
     }
 
-Просмотр экземпляра поста.
+Выходные данные:
 
-_Метод_ ___GET___ - `api/v1/posts/{post_id}`
+    { 
+        "id": "int",
+        "author_id": "objectid",
+        "title": "string",
+        "content": "string",
+        "publication_datetime": "datatime",
+        "comments": []
+    }
 
+###### Просмотр экземпляра поста.
+
+_Метод_ ___GET___ - `/api/v1/posts/{post_id}`
+
+Выходные данные:
 
     { 
         "id": "post_id",
@@ -81,30 +105,53 @@ _Метод_ ___GET___ - `api/v1/posts/{post_id}`
         "comments": []
     }
 
+###### Изменение экземпляра поста.
 
-Изменение экземпляра поста.
+_Метод_ ___PUT___ - `/api/v1/posts/{post_id}`
 
-_Метод_ ___PUT___ - `api/v1/posts/{post_id}`
-
+Входные данные:
 
     {
         "title": "string",
         "content": "string"
     }
 
-Частичное изменение экземпляра поста.
+Выходные данные:
 
-_Метод_ ___PATCH___ - `api/v1/posts/{post_id}`
+    { 
+        "id": "post_id",
+        "author_id": "objectid",
+        "title": "string",
+        "content": "string",
+        "publication_datetime": "datatime",
+        "comments": []
+    }
 
+###### Частичное изменение экземпляра поста.
+
+_Метод_ ___PATCH___ - `/api/v1/posts/{post_id}`
+
+Входные данные:
 
     {
         "title": "string", *опционально
         "content": "string" *опционально
     }
 
-Удаление экземпляра поста.
+Выходные данные:
 
-_Метод_ ___DELETE___ - `api/v1/posts/{post_id}`
+    { 
+        "id": "post_id",
+        "author_id": "objectid",
+        "title": "string",
+        "content": "string",
+        "publication_datetime": "datatime",
+        "comments": []
+    }
+
+###### Удаление экземпляра поста.
+
+_Метод_ ___DELETE___ - `/api/v1/posts/{post_id}`
 
 
 ### Comment:
@@ -119,35 +166,72 @@ _Метод_ ___DELETE___ - `api/v1/posts/{post_id}`
         publication_datetime: datatime
     }
 
-Создание комментария под постом.
+###### Создание комментария под постом.
 
-_Метод_ ___POST___ - `api/v1/posts/{post_id}/comments`
+_Метод_ ___POST___ - `/api/v1/posts/{post_id}/comments`
 
-    {
-        "title": "string",
-        "content": "string"
-    }
-
-
-Изменение экземпляра комментария.
-
-_Метод_ ___PUT___ - `api/v1/posts/{post_id}/comments/{comment_id}`
+Входные данные:
 
     {
         "title": "string",
         "content": "string"
     }
 
-Частичное изменение экземпляра комментария.
+Выходные данные:
 
-_Метод_ ___PATCH___ - `api/v1/posts/{post_id}/comments/{comment_id}`
+    { 
+        "id": "int"
+        "post_id": "post_id"
+        "author_id": "objectid"
+        "title": "string"
+        "content": "string"
+        "publication_datetime": "datatime"
+    }
 
+###### Изменение экземпляра комментария.
+
+_Метод_ ___PUT___ - `/api/v1/posts/{post_id}/comments/{comment_id}`
+
+Входные данные:
+
+    {
+        "title": "string",
+        "content": "string"
+    }
+
+Выходные данные:
+
+    { 
+        "id": "int"
+        "post_id": "post_id"
+        "author_id": "comment_id"
+        "title": "string"
+        "content": "string"
+        "publication_datetime": "datatime"
+    }
+
+###### Частичное изменение экземпляра комментария.
+
+_Метод_ ___PATCH___ - `/api/v1/posts/{post_id}/comments/{comment_id}`
+
+Входные данные:
 
     {
         "title": "string", *опционально
         "content": "string" *опционально
     }
 
-Удаление экземпляра комментария.
+Выходные данные:
 
-_Метод_ ___DELETE___ - `api/v1/posts/{post_id}/comments/{comment_id}`
+    { 
+        "id": "int"
+        "post_id": "post_id"
+        "author_id": "comment_id"
+        "title": "string"
+        "content": "string"
+        "publication_datetime": "datatime"
+    }
+
+###### Удаление экземпляра комментария.
+
+_Метод_ ___DELETE___ - `/api/v1/posts/{post_id}/comments/{comment_id}`

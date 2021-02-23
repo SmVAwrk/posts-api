@@ -1,6 +1,5 @@
 import datetime
 
-from sqlalchemy.orm import backref
 
 from . import db
 from passlib.apps import custom_app_context as password_hasher
