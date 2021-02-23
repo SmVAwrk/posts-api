@@ -1,4 +1,5 @@
 import datetime
+import pytz
 
 from flask import Blueprint, jsonify, request, g, url_for
 from flask_restful import Api, Resource
@@ -79,7 +80,7 @@ class PostsListView(DataHandlerMixin, Resource):
             author_id=g.user.id,
             title=data['title'],
             content=data['content'],
-            publication_datetime=datetime.datetime.now()
+            publication_datetime=datetime.datetime.now(pytz.timezone('Europe/Moscow'))
         )
         db.session.add(post)
         db.session.commit()
@@ -180,7 +181,7 @@ class CommentsCreateView(DataHandlerMixin, Resource):
             author_id=g.user.id,
             title=data['title'],
             content=data['content'],
-            publication_datetime=datetime.datetime.now()
+            publication_datetime=datetime.datetime.now(pytz.timezone('Europe/Moscow'))
         )
         db.session.add(comment)
         db.session.commit()
