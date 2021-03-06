@@ -167,9 +167,9 @@ class CommentsCreateView(DataHandlerMixin, Resource):
         Доступно только авторизованным пользователям.
         """
         post = Post.query.filter(Post.id == post_id).first()
-        not_found_or_not_owner = self._check_data(post=post)
-        if not_found_or_not_owner:
-            return not_found_or_not_owner[0], not_found_or_not_owner[1]
+        not_found = self._check_data(post=post)
+        if not_found:
+            return not_found[0], not_found[1]
 
         json_data = request.get_json()
         data, status = self._request_data_handler(json_data, comment_create_schema)
