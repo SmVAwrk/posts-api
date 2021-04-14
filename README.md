@@ -76,7 +76,7 @@ _Метод_ ___POST___ - `/api/v1/registration`
         author_id: objectid
         title: string
         content: string
-        publication_datetime: datatime
+        publication_datetime: datetime
     }
 
 ###### Просмотр списка постов.
@@ -91,7 +91,7 @@ _Метод_ ___GET___ - `/api/v1/posts`
             "author_id": "objectid",
             "title": "string",
             "content": "string",
-            "publication_datetime": "datatime",
+            "publication_datetime": "datetime",
             "comments": []
         },
     ]
@@ -114,7 +114,7 @@ _Метод_ ___POST___ - `/api/v1/posts`
         "author_id": "objectid",
         "title": "string",
         "content": "string",
-        "publication_datetime": "datatime",
+        "publication_datetime": "datetime",
         "comments": []
     }
 
@@ -129,7 +129,7 @@ _Метод_ ___GET___ - `/api/v1/posts/{post_id}`
         "author_id": "objectid",
         "title": "string",
         "content": "string",
-        "publication_datetime": "datatime",
+        "publication_datetime": "datetime",
         "comments": []
     }
 
@@ -151,7 +151,7 @@ _Метод_ ___PUT___ - `/api/v1/posts/{post_id}`
         "author_id": "objectid",
         "title": "string",
         "content": "string",
-        "publication_datetime": "datatime",
+        "publication_datetime": "datetime",
         "comments": []
     }
 
@@ -173,7 +173,7 @@ _Метод_ ___PATCH___ - `/api/v1/posts/{post_id}`
         "author_id": "objectid",
         "title": "string",
         "content": "string",
-        "publication_datetime": "datatime",
+        "publication_datetime": "datetime",
         "comments": []
     }
 
@@ -191,7 +191,7 @@ _Метод_ ___DELETE___ - `/api/v1/posts/{post_id}`
         author_id: objectid
         title: string
         content: string
-        publication_datetime: datatime
+        publication_datetime: datetime
     }
 
 ###### Создание комментария под постом.
@@ -213,7 +213,7 @@ _Метод_ ___POST___ - `/api/v1/posts/{post_id}/comments`
         "author_id": "objectid"
         "title": "string"
         "content": "string"
-        "publication_datetime": "datatime"
+        "publication_datetime": "datetime"
     }
 
 ###### Изменение экземпляра комментария.
@@ -235,7 +235,7 @@ _Метод_ ___PUT___ - `/api/v1/posts/{post_id}/comments/{comment_id}`
         "author_id": "comment_id"
         "title": "string"
         "content": "string"
-        "publication_datetime": "datatime"
+        "publication_datetime": "datetime"
     }
 
 ###### Частичное изменение экземпляра комментария.
@@ -257,7 +257,7 @@ _Метод_ ___PATCH___ - `/api/v1/posts/{post_id}/comments/{comment_id}`
         "author_id": "comment_id"
         "title": "string"
         "content": "string"
-        "publication_datetime": "datatime"
+        "publication_datetime": "datetime"
     }
 
 ###### Удаление экземпляра комментария.
