@@ -7,26 +7,21 @@ services:
     restart: always
     ports:
       - "5432"
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
 
   app:
     build: .
     restart: always
     command: bash -c "
-        python manage.py db init
-        && python manage.py db migrate
-        && python manage.py db upgrade
-        && gunicorn -w 3 -b 0.0.0.0:8080 flask_app:app
+      python manage.py db init
+      && python manage.py db migrate
+      && python manage.py db upgrade
+      && gunicorn -w 3 -b 0.0.0.0:8080 flask_app:app
       "
     depends_on:
       - db
     ports:
       - "8080:8080"
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
+
 
 
 
